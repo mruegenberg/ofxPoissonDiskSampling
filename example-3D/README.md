@@ -1,0 +1,1 @@
+Note: Lighting doesn't work for some reason.
