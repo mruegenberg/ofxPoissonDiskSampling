@@ -23,13 +23,13 @@ void testApp::draw(){
     ofSetColor(220,0,50);
     ofFill();
     for(ofVec2f v : m_samples) {
-        ofCircle(v.x,v.y, 5);
+        ofDrawCircle(v.x,v.y, 5);
     }
     
     ofSetColor(0,90,180);
     ofNoFill();
     for(ofVec2f v : m_samples) {
-        ofCircle(v.x,v.y, m_density * 0.5);
+        ofDrawCircle(v.x,v.y, m_density * 0.5);
     }
 }
 
