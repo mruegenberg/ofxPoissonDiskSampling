@@ -58,19 +58,35 @@ vector<ofVec2f> ofxPoissonDiskSampling::sample2D(float w, float h, float density
 }
 
 vector<ofVec3f> ofxPoissonDiskSampling::sample3D(float w, float h, float d, float density, bool borders, int *bordersStart) {
+    // ofLogNotice("ofxPoissonDiskSampling", "start sampling");
     vector<ofVec3f> result;
 
     // create positions
     {
         vector<Vec<3,float>> found;
-        bluenoise_sample(density, Vec<3,float>(density,density,density), Vec<3,float>(w-density, h-density, d-density), found);
+        float xmaxX = w - density; 
+        float xmaxY = h - density; 
+        float xmaxZ = d - density;
+        bool densityTooLarge = false;
+        if(xmaxX < density + 1) { xmaxX = density + 1; densityTooLarge = true; }
+        if(xmaxY < density + 1) { xmaxY = density + 1; densityTooLarge = true; }
+        if(xmaxZ < density + 1) { xmaxZ = density + 1; densityTooLarge = true; }
+        // ofLogNotice("ofxPoissonDiskSampling", "presample (%f %f %f) (%f %f %f) %f", w, h, d, xmaxX, xmaxY, xmaxZ, density);
+        if(densityTooLarge)
+            ofLogWarning("ofxPoissonDiskSampling", "density too large (or dimensions too small to actually get samples");
+        
+        bluenoise_sample(density, Vec<3,float>(density,density,density), Vec<3,float>(xmaxX,xmaxY,xmaxZ), found);
+        // ofLogNotice("ofxPoissonDiskSampling", "postsample");
 
         for(auto v : found) {
             result.push_back(ofVec3f(v[0],v[1],v[2]));
         }
+        // ofLogNotice("ofxPoissonDiskSampling", "added samples");
     }
+    // ofLogNotice("ofxPoissonDiskSampling", "created positions");
 
     if(borders) {
+        // ofLogNotice("ofxPoissonDiskSampling", "borders");
         if(bordersStart != NULL)
             *bordersStart = result.size();
 
