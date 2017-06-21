@@ -5,7 +5,7 @@ An OpenFrameworks wrapper for Poisson Disk Sampling, a method to generate random
 
 The code uses C++11 (but could easily be rewritten to conform to C++98).
 
-The following images show the difference between true randomness and Poisson Disk Sampling. I ran a Delaunay triangulation on both sets of samples.
+The following images show the difference between "true" (actually pseudo-)randomness and Poisson Disk Sampling. I ran a Delaunay triangulation on both sets of samples.
 
 ![ofRandom](delaunay_random.png)
 
